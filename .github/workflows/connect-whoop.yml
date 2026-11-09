@@ -1,0 +1,32 @@
+name: Connect WHOOP
+
+# One time setup (and the fix if WHOOP ever disconnects).
+# Run 1: leave "code" empty. The run's summary page shows a link.
+# Run 2: paste the code from the Luna page you land on after approving.
+
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Leave empty the first time. Second time: paste the code from the Luna page.'
+        required: false
+        default: ''
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests supabase
+      - name: Connect
+        env:
+          CODE: ${{ inputs.code }}
+          WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
+          WHOOP_CLIENT_SECRET: ${{ secrets.WHOOP_CLIENT_SECRET }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PUBLISH_REPO: ${{ vars.PUBLISH_REPO }}
+        run: python health/whoop/connect.py

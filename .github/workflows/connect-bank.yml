@@ -1,0 +1,34 @@
+name: Connect Bank
+
+# One time setup, and every few months when the bank asks to reconnect.
+# Run 1: leave "code" empty. The run's summary page shows a link.
+# Run 2: paste the code from the Luna page you land on after approving.
+
+on:
+  workflow_dispatch:
+    inputs:
+      code:
+        description: 'Leave empty the first time. Second time: paste the code from the Luna page.'
+        required: false
+        default: ''
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install supabase requests "PyJWT[crypto]"
+      - name: Connect
+        env:
+          CODE: ${{ inputs.code }}
+          ENABLE_BANKING_APP_ID: ${{ secrets.ENABLE_BANKING_APP_ID }}
+          ENABLE_BANKING_KEY: ${{ secrets.ENABLE_BANKING_KEY }}
+          BANK_NAME: ${{ vars.BANK_NAME }}
+          BANK_COUNTRY: ${{ vars.BANK_COUNTRY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PUBLISH_REPO: ${{ vars.PUBLISH_REPO }}
+        run: python finances/scripts/bank_connect.py

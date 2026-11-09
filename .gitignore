@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Data files (never commit personal data)
+finances/data/bronze/*.xlsx
+finances/data/bronze/*.csv
+finances/data/bronze/*.parquet
+docs/data/
+health/whoop/data/
+
+# Outputs
+*.html.bak
+outputs/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Temporary
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Large binary files
+*.pdf
+*.xlsx
+*.xls
+*.docx
+*.pptx
+
+# Git
+.git/
+
+# Plaid secrets (never commit)
+finances/.env
+finances/.plaid_secrets.local
+finances/.plaid_investments_secrets.local
+
+app/vite/deps/
+app/dist/
+
+.vite/
+
+V1/
+

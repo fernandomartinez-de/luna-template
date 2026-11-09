@@ -1,0 +1,30 @@
+name: Whoop Sync
+
+# Pulls recovery, sleep, strain and workouts from WHOOP 5 times a day.
+# Needs WHOOP connected first (run the Connect WHOOP workflow once).
+
+on:
+  schedule:
+    - cron: '0 6,10,14,18,21 * * *'   # UTC: about 7am, 11am, 3pm, 7pm, 10pm in Spain (winter)
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests supabase
+      - name: Sync WHOOP data
+        env:
+          WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
+          WHOOP_CLIENT_SECRET: ${{ secrets.WHOOP_CLIENT_SECRET }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$WHOOP_CLIENT_ID" ]; then echo "WHOOP isn't set up yet, so there's nothing to do. Skipping."; exit 0; fi
+          cd health/whoop
+          python sync.py

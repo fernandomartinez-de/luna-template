@@ -1,0 +1,27 @@
+name: Update Stock Prices
+
+# Every weekday evening: values the stocks in the holdings table and saves a
+# snapshot for the Investments tab. Prices come from Yahoo Finance (no key needed).
+
+on:
+  schedule:
+    - cron: '30 21 * * 1-5'   # 21:30 UTC, after US markets close
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: finances/requirements.txt
+      - run: pip install -r finances/requirements.txt
+      - name: Update prices
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          CURRENCY: ${{ vars.CURRENCY }}
+        run: python finances/scripts/stock_prices.py

@@ -1,0 +1,462 @@
+/* Luna Homepage Styles */
+.luna-home {
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header */
+.luna-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.luna-date {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  color: var(--tx-muted);
+  margin: 0 0 4px 0;
+}
+
+.luna-greeting {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tx-primary);
+  margin: 0;
+}
+
+.luna-btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background-color: var(--brand-500);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+
+.luna-btn-start:hover {
+  background-color: var(--brand-600);
+  color: white;
+}
+
+/* Card Base */
+.luna-card {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* Up Next */
+.luna-up-next {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  transition: background-color 0.15s ease;
+}
+
+.luna-up-next:hover {
+  background-color: var(--surface-muted);
+}
+
+.luna-up-next-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.luna-up-next-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background-color: var(--surface-muted);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.luna-up-next-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+  color: var(--tx-muted);
+  margin: 0;
+}
+
+.luna-up-next-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tx-primary);
+  margin: 2px 0 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.luna-up-next-meta {
+  font-size: 12px;
+  color: var(--tx-muted);
+  margin: 2px 0 0 0;
+}
+
+.luna-up-next-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--brand-500);
+  border-radius: 10px;
+  flex-shrink: 0;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.luna-up-next-play:hover {
+  background-color: var(--brand-600);
+}
+
+/* Stats Grid */
+.luna-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.luna-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+}
+
+.luna-stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+  color: var(--tx-muted);
+}
+
+.luna-stat-header svg {
+  color: var(--tx-muted);
+  opacity: 0.7;
+}
+
+.luna-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--tx-primary);
+  line-height: 1;
+  margin: 0;
+}
+
+.luna-stat-unit {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--tx-muted);
+  margin-left: 2px;
+}
+
+.luna-stat-label {
+  font-size: 10px;
+  color: var(--tx-muted);
+  margin: 0;
+}
+
+.luna-progress {
+  height: 4px;
+  background-color: var(--surface-muted);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.luna-progress-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Card Headers */
+.luna-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.luna-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.luna-card-title-row svg {
+  color: var(--brand-500);
+  flex-shrink: 0;
+}
+
+.luna-card-title-row h2,
+.luna-card h3 {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tx-secondary);
+}
+
+.luna-card-subtitle {
+  font-size: 12px;
+  color: var(--tx-muted);
+}
+
+/* Period Buttons */
+.luna-period-btns {
+  display: flex;
+  gap: 4px;
+  background-color: var(--surface-overlay);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.luna-period-btns button {
+  padding: 6px 12px;
+  border: none;
+  background-color: transparent;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tx-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.luna-period-btns button:hover {
+  color: var(--tx-primary);
+}
+
+.luna-period-btns button.active {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  color: var(--tx-primary);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Chart Empty State */
+.luna-chart-empty {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-base);
+  border-radius: 8px;
+  color: var(--tx-muted);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+/* Weekly Dots */
+.luna-weekly-dots {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.luna-dot-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.luna-dot-col span {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--tx-muted);
+}
+
+.luna-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(28, 47, 80, 0.6);
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.luna-dot.active {
+  background-color: transparent;
+  border-color: var(--brand-500);
+}
+
+/* Heatmap */
+.luna-heatmap-grid {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 8px;
+}
+
+.luna-heatmap-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--tx-muted);
+  padding-top: 18px;
+}
+
+.luna-heatmap-labels span {
+  height: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.luna-heatmap {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+}
+
+.luna-heatmap-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.luna-heatmap-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: rgba(22, 34, 64, 0.5);
+  transition: background-color 0.2s ease;
+}
+
+.luna-heatmap-cell:hover {
+  background-color: rgba(0, 184, 217, 0.3);
+}
+
+/* Two Column Layout */
+.luna-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .luna-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Links */
+.luna-link-small {
+  font-size: 12px;
+  color: var(--brand-400);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.luna-link-small:hover {
+  color: var(--brand-300);
+}
+
+/* Empty Card */
+.luna-empty-card {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.luna-empty-card p {
+  margin: 0 0 16px 0;
+  color: var(--tx-muted);
+  font-size: 0.9rem;
+}
+
+.luna-btn-sm {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: var(--brand-500);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.luna-btn-sm:hover {
+  background-color: var(--brand-600);
+  color: white;
+}
+
+/* Nutrition */
+.luna-nutrition {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.luna-nutrition-main {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.luna-nutrition-big {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--tx-primary);
+  line-height: 1;
+}
+
+.luna-nutrition-small {
+  font-size: 12px;
+  color: var(--tx-muted);
+}
+
+.luna-macro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.luna-macro-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.luna-macro-row span:first-child {
+  color: var(--tx-muted);
+}
+
+.luna-macro-row span:last-child {
+  color: var(--tx-primary);
+  font-weight: 600;
+}

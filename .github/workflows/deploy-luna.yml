@@ -1,0 +1,99 @@
+name: Deploy Luna
+
+# Builds the React app in app/ and publishes it to GitHub Pages.
+#
+# Two ways to host it (see docs/setup.md, step 6):
+#
+#   A. Public repo (simplest). Leave the PUBLISH_REPO variable unset and set
+#      Settings > Pages > Source to "GitHub Actions". The app is served from
+#      this repo at https://<owner>.github.io/<this-repo>/
+#
+#   B. Private repo. Pages on a private repo needs a paid GitHub plan, so this
+#      pushes ONLY the built app to a second, public repo instead. Set the
+#      repository variable PUBLISH_REPO to "<owner>/<public-repo>" and add the
+#      secret LUNA_PUBLISH_TOKEN (a fine grained token with Contents: Read and
+#      write on that public repo only). In the public repo, set Settings > Pages
+#      > Source to "Deploy from a branch", branch main, folder / (root).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - '.github/workflows/deploy-luna.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deploy-luna
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build
+        working-directory: app
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_KEY }}
+          PUBLISH_REPO: ${{ vars.PUBLISH_REPO }}
+        run: |
+          # The app is served at /<repo-name>/, so the build needs that path.
+          REPO="${PUBLISH_REPO:-$GITHUB_REPOSITORY}"
+          export VITE_BASE="/${REPO#*/}/"
+          echo "Building for $VITE_BASE"
+          npm run build
+
+      - name: Single page app fallback
+        # GitHub Pages serves 404.html for unknown paths; making it a copy of
+        # the app lets links deep inside the app (e.g. /luna/finances) load.
+        run: cp app/dist/index.html app/dist/404.html
+
+      - name: Upload build for this repo's Pages (option A)
+        if: vars.PUBLISH_REPO == ''
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist
+
+      - name: Publish build to the public repo (option B)
+        if: vars.PUBLISH_REPO != ''
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.LUNA_PUBLISH_TOKEN }}
+          external_repository: ${{ vars.PUBLISH_REPO }}
+          publish_branch: main
+          publish_dir: app/dist
+          # Each deploy replaces the public repo's history with a single commit,
+          # so it only ever holds the current build.
+          force_orphan: true
+          user_name: luna-bot
+          user_email: actions@users.noreply.github.com
+          commit_message: Publish Luna build
+
+  deploy:
+    if: vars.PUBLISH_REPO == ''
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

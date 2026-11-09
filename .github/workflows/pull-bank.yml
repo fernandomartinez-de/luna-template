@@ -1,0 +1,44 @@
+name: Pull Bank Transactions
+
+# Every morning: pulls new transactions from the bank (through Enable Banking),
+# then checks them for money alerts. Needs the bank connected first (Connect Bank).
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # 06:00 UTC, about 7am in Spain
+  workflow_dispatch: {}
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: finances/requirements.txt
+      - run: pip install -r finances/requirements.txt
+
+      - name: Pull transactions
+        id: bank
+        env:
+          ENABLE_BANKING_APP_ID: ${{ secrets.ENABLE_BANKING_APP_ID }}
+          ENABLE_BANKING_KEY: ${{ secrets.ENABLE_BANKING_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$ENABLE_BANKING_APP_ID" ]; then echo "The bank isn't set up yet, so there's nothing to do. Skipping."; exit 0; fi
+          python finances/scripts/bank_sync.py
+
+      - name: Check for money alerts
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          LUNA_URL: ${{ secrets.LUNA_URL }}
+        run: python finances/scripts/finance_alerts.py
