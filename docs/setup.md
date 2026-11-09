@@ -29,8 +29,8 @@ flowchart LR
 
 ## Part 1: Get your own copy
 
-1. Accept the GitHub invite email from Fernando.
-2. Open the shared repo and click the green **Use this template** → **Create a new repository**.
+1. Sign in to GitHub and open [github.com/fernandomartinez-de/luna-template](https://github.com/fernandomartinez-de/luna-template).
+2. Click the green **Use this template** → **Create a new repository**.
 3. **Owner:** you. **Repository name:** `luna`. Choose **Public**. Click **Create repository**.
 
 Public is fine: the code has no passwords or personal data in it. Your data lives in your private database.
